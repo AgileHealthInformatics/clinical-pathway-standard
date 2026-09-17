@@ -1,20 +1,34 @@
-# HPDS Acute Admissions & Discharge Catalogue Demonstrator
+# HPDS Frailty & Multimorbidity Neighbourhood Care Demonstrator
 
-An interactive, self-contained demonstrator showing how the proposed **Healthcare Pathway Description Standard (HPDS) WD 0.3** can be applied to an existing acute admissions and discharge clinical pathway catalogue.
+An interactive, self-contained demonstrator showing how the proposed **Healthcare Pathway Description Standard (HPDS) WD 0.3** could be used to describe, catalogue and analyse **frailty and multimorbidity neighbourhood-care pathways**.
 
-The demonstrator uses the **UHSx Acute Admissions & Discharge Clinical Pathway Catalogue** as source material and explores whether a spreadsheet-based catalogue can be projected into governed, technology-neutral healthcare pathway business artefacts while keeping local implementation detail separate.
+The demonstrator explores a catalogue-first approach in which the pathway is treated as a **governed, technology-neutral business artefact**, distinct from the organisations, systems and interfaces used to implement it locally.
 
-> **Status:** Informative demonstrator. HPDS WD 0.3 is a Working Draft. The imported catalogue rows are not asserted to be conformant HPDS pathway definitions, clinically approved pathways, or authoritative descriptions of current local workflow.
+> **Status:** Informative demonstrator only. HPDS WD 0.3 is a Working Draft. The catalogue is a reference catalogue for local validation. It does not assert that any locality currently operates these pathways, that any pathway is clinically approved, or that the catalogue is HPDS conformant.
 
 ## Why this demonstrator exists
 
-Clinical pathway catalogues are often useful operational documents, but their structure is usually local to a particular spreadsheet, programme, EPR implementation or modelling exercise.
+Neighbourhood care is a useful test for a pathway-description standard because the end-to-end model of care commonly spans multiple organisational and professional boundaries.
 
-HPDS explores a different proposition: that a healthcare pathway can be managed as a **persistent, governed, technology-neutral business artefact** with explicit identity, lifecycle, provenance, structure, semantics and relationships.
+A frailty or multimorbidity pathway may involve:
 
-This demonstrator tests that proposition against a substantial existing catalogue rather than against a synthetic example.
+- the person and their carers;
+- general practice;
+- community nursing and therapy;
+- pharmacy;
+- social care;
+- mental health;
+- urgent community response;
+- virtual wards and hospital-at-home;
+- acute services;
+- care homes;
+- voluntary, community, faith and social enterprise organisations.
 
-Its central design separates:
+No single provider or EPR necessarily owns the complete journey.
+
+HPDS therefore asks whether the pathway itself can be represented independently as a stable artefact around which services, information and local implementations can be coordinated.
+
+The core model demonstrated is:
 
 ```text
 PathwayCatalogue
@@ -24,286 +38,480 @@ CatalogueEntry
 HealthcarePathway
         ↓
 PathwayImplementation
-        ↓
-Pathway instance
 ```
 
-The first four concepts are represented by the HPDS model. A pathway instance, meaning the actual course of care experienced by an individual, is outside the normative scope of the demonstrator.
+The catalogue supports discovery and governance. The `HealthcarePathway` carries the enduring clinical and business meaning. `PathwayImplementation` records how a locality realises that definition using particular organisations, teams, systems, interfaces and local deviations.
 
-## What is in the demonstrator
+## Operability, not interoperability alone
 
-The HTML application contains **56 source pathway families** organised into seven acute-care catalogue groups.
+This demonstrator deliberately uses **operability** as the broader architectural concern.
 
-It provides eight interactive views:
+A pathway is operable when its meaning, responsibilities, information, decisions, transitions and controls remain understandable and usable across professional, organisational, technical and temporal boundaries.
 
-1. **Overview**  
-   Introduces the catalogue-first proposition and the distinction between pathway definition, catalogue entry, local implementation and patient-level pathway instance.
+Technical and semantic interoperability remain important, but they are treated as **enabling components of operability**, not as evidence that the pathway as a whole can operate successfully.
 
-2. **Browse catalogue**  
-   Searches and filters the 56 pathway families by clinical group, readiness priority and evidence status.
+For example, systems may exchange data correctly while the pathway still fails because:
 
-3. **Pathway definition**  
-   Projects a selected catalogue row into HPDS-oriented concepts while preserving the original source text and identifying missing authoring information.
+- responsibility is unclear;
+- information is unavailable to the right role;
+- tasks are not coordinated;
+- plans are duplicated or out of date;
+- escalation routes are ambiguous;
+- information arrives too late to support a decision.
 
-4. **Definition vs implementation**  
-   Separates enduring clinical and business meaning from local systems, sites, EPR capabilities, interfaces and implementation-specific detail.
+## Catalogue contents
 
-5. **Conformance lab**  
-   Compares each source row with the HPDS WD 0.3 minimum pathway-definition dataset. This is a completeness assessment, not a conformance declaration.
+The embedded reference catalogue currently contains:
 
-6. **24-field mapping**  
-   Shows how each source catalogue field maps to the HPDS conceptual model and where decomposition or further authoring would be required.
+- **38 catalogue entries**;
+- **35 care pathways**;
+- **3 governance processes**;
+- **9 coordination domains**;
+- **33 working catalogue fields**;
+- **16 public evidence sources**, plus two project/design sources;
+- **40 local discovery questions**.
 
-7. **Catalogue anatomy**  
-   Shows how spreadsheet rows, catalogue entries, pathway definitions, structured elements and implementation mappings relate.
+The three governance-process entries are retained because they are relevant to operating and assuring neighbourhood care, but they are **not claimed as `HealthcarePathway` definitions**. Their subject is the service or operating model rather than an individual subject of care.
 
-8. **Evidence & discovery**  
-   Retains the source register and local discovery questions so that provenance and unresolved implementation questions remain visible.
+## Coordination domains
 
-## Key design principles demonstrated
+The catalogue is organised into nine domains:
 
-### Catalogue first
+1. **Population identification & enrolment**  
+   Identifying people who may benefit from proactive neighbourhood coordination and deciding how they enter the model.
 
-The catalogue is treated as a governed collection of pathway definitions rather than as the definition of the pathway model itself.
+2. **Holistic assessment & personalised planning**  
+   Comprehensive assessment, what-matters discussions, care planning, carer needs and functional or cognitive review.
 
-### Technology-neutral pathway definition
+3. **Medicines & multimorbidity optimisation**  
+   Structured medication review, polypharmacy, treatment burden, adherence and community-pharmacy support.
 
-The pathway definition contains enduring clinical and business meaning.
+4. **Proactive neighbourhood coordination**  
+   MDT review, longitudinal monitoring, social prescribing, falls prevention and proactive care-home support.
 
-Named local systems, sites, EPR products, interfaces and operational arrangements belong to `PathwayImplementation`.
+5. **Deterioration & urgent neighbourhood response**  
+   Recognition and management of deterioration in the person's usual residence, including UCR and escalation.
 
-This means that replacing an EPR, PAS or integration product should not require the clinical pathway identity itself to change.
+6. **Admission avoidance & hospital-at-home**  
+   Step-up virtual wards, same-day specialist assessment and community diagnostics that support acute care outside hospital.
 
-### Definition before implementation
+7. **Transitions, discharge & recovery**  
+   Hospital discharge, reablement, step-down virtual wards and post-discharge reconciliation.
 
-The demonstrator distinguishes between:
+8. **Cognition, advance care & palliative coordination**  
+   Dementia coordination, advance care planning, escalation preferences and palliative/end-of-life care.
 
-- what the pathway is intended to achieve;
-- the activities, roles, information and decisions it requires;
-- how a particular organisation chooses to realise it.
+9. **Governance, review & learning**  
+   Care-plan review after significant change and supporting governance processes for learning, information quality and outcomes.
 
-### Evidence and authority are different
+These are **catalogue classifications**, not pathway stages.
 
-Source provenance is preserved for each catalogue row.
+## Interactive views
 
-An item being well evidenced does **not** mean that it is clinically approved, operationally authoritative or HPDS conformant.
+The demonstrator contains nine views.
 
-### Missing information is not invented
+### 1. Overview
 
-Where the source catalogue does not provide required HPDS information, the interface displays an **Authoring gap** rather than silently inferring a value.
+Introduces the catalogue-first proposition, the definition/implementation separation and the distinction between operability and interoperability.
 
-Typical gaps include:
+It also shows current catalogue status, including the remaining Level 1 authoring gaps.
 
-- purpose;
-- owner;
-- version;
+### 2. Browse catalogue
+
+Search and filter all 38 entries by coordination domain and evidence status.
+
+Each entry displays its:
+
+- catalogue ID;
+- domain;
+- pathway family;
+- artefact class;
 - lifecycle status;
-- authority status;
-- intended use;
-- expected outcomes;
-- formal decision-point declarations.
+- coordinating function;
+- evidence status.
 
-## Source catalogue
+Selecting an entry opens the HPDS artefact view.
 
-The underlying catalogue was developed as an acute admissions and discharge reference resource for University Hospitals Sussex.
+### 3. HPDS artefact
 
-The demonstrator includes:
+Projects the selected working-catalogue row into HPDS WD 0.3 concepts.
 
-- 56 pathway families;
-- seven clinical groups;
-- 24 working catalogue fields;
-- evidence references;
-- local validation questions;
-- EPR and integration-readiness information.
+The view separates:
 
-The source catalogue contains both clinical/business content and implementation-specific material. One of the main purposes of the demonstrator is to separate those two layers.
+- pathway-definition content;
+- information and operability;
+- evidence;
+- the draft JSON projection.
 
-## HPDS mapping
+It preserves the original source text and identifies unresolved authoring requirements rather than inventing values.
 
-Examples of source-to-HPDS mappings include:
+Each care-pathway entry has:
 
-| Catalogue field | HPDS interpretation |
-| --- | --- |
-| Pathway ID | `HealthcarePathway.identifier` |
-| Pathway Family | `HealthcarePathway.name` |
-| Clinical Trigger / Referral Context | `Population` and `EntryPoint` candidate content |
-| Service Role | `Role` and/or `Service` |
-| Typical Investigation / Procedure(s) | `Activity` |
-| Pathway Phase | `PathwayStage` |
-| Key Upstream Information | `InformationRequirement` |
-| Service Outputs / Information Generated | `InformationProduct` |
-| Downstream Destination / Decision | `ExitPoint`, and where justified `DecisionPoint` / `PathwayBranch` |
-| Key Clinical Data Objects | `ClinicalConcept` and information-model content |
-| Source IDs | `EvidenceSource` references |
-| Known Organisation Site / Service Context | `PathwayImplementation` |
-| Required EPR Capabilities | implementation / assurance metadata |
-| Local Validation Questions | implementation-authoring aid |
+- a separate catalogue-entry ID;
+- a pathway-definition URI;
+- version `0.1.0`;
+- lifecycle status `draft`;
+- authority status `unapproved`;
+- intended use `analysis; service-design`.
 
-The mapping is deliberately cautious. Free text in a spreadsheet is treated as **candidate source content**, not automatically as a formally structured HPDS element.
+Pathway owners, explicit exit points/criteria and principal stages remain authoring gaps.
 
-## Conformance model
+### 4. Neighbourhood orchestration
 
-HPDS WD 0.3 defines four cumulative conformance levels:
+Shows a **schematic**, not an executable workflow.
 
-- **Level 1: Catalogue-ready**  
-  Persistent identity, minimum pathway description, governance metadata and a human-readable catalogue record.
+The selected person or population is placed at the centre, surrounded by participating services and roles, with the care-coordination function shown separately.
 
-- **Level 2: Structured**  
-  Identified pathway elements with explicit structural and behavioural relationships.
+The view helps ask:
 
-- **Level 3: Semantically bound**  
-  Clinically significant concepts and mandatory information requirements carry versioned semantic bindings or are explicitly declared local terms.
+- who participates;
+- who coordinates;
+- what information must be shared;
+- what decisions or escalations matter;
+- what the shared care plan must contain;
+- what dependencies must be satisfied.
 
-- **Level 4: Computably specified**  
-  Selected criteria and temporal constraints can be represented using a declared computable expression profile.
+It also analyses recurring services and coordination capabilities across the selected domain.
 
-The demonstrator does **not** claim that imported source rows meet Level 1. It shows which elements can be mapped from the existing catalogue and which require additional authorised pathway authoring.
+### 5. Single Patient Record lens
 
-## How to use the demonstrator
+Uses each pathway to ask three separate questions:
 
-Start with **Browse catalogue** and select a pathway family of interest.
+1. **What must the SPR surface?**
+2. **What information does the pathway update?**
+3. **What orchestration still has to occur outside the shared record?**
 
-Then use the views in sequence:
+This is intended to prevent a shared record from being treated as synonymous with coordinated care.
+
+The architectural distinction is:
 
 ```text
-Browse source catalogue
-        ↓
-Inspect HPDS pathway projection
-        ↓
-Review definition / implementation separation
-        ↓
-Examine conformance gaps
-        ↓
-Review field mappings
-        ↓
-Trace evidence and local discovery questions
+HPDS
+describes what coordinated care requires
+
+SPR
+provides part of the shared information environment
+
+local systems and orchestration services
+perform the operational work
 ```
 
-The demonstrator is particularly useful for workshops involving:
+### 6. HPDS conformance levels
+
+Shows the four cumulative WD 0.3 conformance levels:
+
+- **Level 1: Catalogue-ready**
+- **Level 2: Structured**
+- **Level 3: Semantically bound**
+- **Level 4: Computably specified**
+
+Level 1 is shown as the **initial target**, not the current state.
+
+For each entry, the demonstrator performs a source-to-standard completeness assessment against the WD 0.3 minimum dataset. This is not a conformance declaration.
+
+### 7. Reference definition versus local implementation
+
+Shows the separation between the reference pathway and its local realisation.
+
+The reference definition contains clinical and business meaning such as:
+
+- population;
+- purpose;
+- activities;
+- decisions;
+- roles and services;
+- information requirements;
+- intended outcomes.
+
+The implementation layer is where a locality records:
+
+- implementing organisations;
+- named teams;
+- local services and locations;
+- systems and records;
+- interfaces and information exchanges;
+- automation artefacts;
+- assurance evidence;
+- deviations;
+- local additions and measures;
+- validation status.
+
+The demonstrator reads the implementation structure embedded from the working catalogue.
+
+### 8. Field mapping
+
+Maps all **33 working catalogue fields** to their intended HPDS WD 0.3 target or boundary.
+
+Examples include:
+
+| Working catalogue field | HPDS interpretation |
+| --- | --- |
+| Pathway ID | `CatalogueEntry.entryIdentifier` |
+| Pathway Definition URI | `HealthcarePathway.identifier` |
+| Pathway Family | `HealthcarePathway.name` |
+| Target Person / Population | `Population.inclusionCriterion` |
+| Trigger / Entry Context | `EntryPoint.criterion` |
+| Purpose | `HealthcarePathway.purpose` |
+| Desired Outcomes | `Outcome` |
+| Participating Services / Roles | `Role` / `Service` |
+| Principal Activities | `Activity` |
+| Key Decisions / Escalation Points | `DecisionPoint` candidate content |
+| Care Setting(s) | `CareSetting` |
+| Key Upstream Information | `InformationRequirement` |
+| Information Produced / Updated | `InformationProduct` |
+| Key Clinical / Social Data Objects | `ClinicalConcept` |
+| Interoperability Requirements | `InteroperabilityRequirement` |
+| Source IDs | `EvidenceSource` references |
+| Related Pathways (Candidate) | pathway relationships such as `includes`, `transitionsTo`, `escalatesTo` |
+
+Two fields are deliberately represented as extensions pending further standards work:
+
+- **Care Coordinator / Accountable Function**
+- **Required Digital & Care Coordination Capabilities**
+
+### 9. Evidence & discovery
+
+Contains three tabs:
+
+- **Source register**
+- **Catalogue metadata**
+- **Discovery questions**
+
+The source register includes project/design sources and public guidance from NHS England, NICE and the British Geriatrics Society.
+
+Evidence provenance is deliberately kept separate from clinical authority.
+
+A pathway being well supported by guidance does not make the catalogue entry clinically approved or operationally authoritative.
+
+## Candidate pathway relationships
+
+The catalogue contains a `Related Pathways (Candidate)` field using relationships such as:
+
+- `includes`
+- `transitionsTo`
+- `escalatesTo`
+
+These relationships are analytical candidates derived from the pathway text and require clinical validation.
+
+The demonstrator exports `includes` where it can be represented directly. `transitionsTo` and `escalatesTo` remain candidate content until the relevant exit points, events, branches or decision elements have been formally authored.
+
+## Draft JSON export
+
+Individual entries can be exported as:
+
+```text
+<PATHWAY-ID>_HPDS_WD03_draft_projection.json
+```
+
+The export uses HPDS WD 0.3 property names and structure and contains:
+
+- the catalogue entry;
+- the draft pathway definition;
+- evidence references;
+- provenance;
+- constraints;
+- extensions;
+- candidate relationship content;
+- an explicit list of authoring gaps.
+
+The JSON is intentionally labelled a **draft projection**.
+
+It does not claim conformance merely because source content can be mapped into the HPDS structure.
+
+Governance-process entries are also explicitly identified as outside the claimed population of HPDS pathway definitions.
+
+## Catalogue governance
+
+Current catalogue metadata includes:
+
+```text
+Catalogue version:       0.1.0
+Release date:            2026-09-17
+Publisher:               Agile Health Informatics Ltd (working catalogue)
+Governance authority:    Not yet assigned
+Target conformance:      Level 1 for care-pathway entries
+Current conformance:     Not claimed
+```
+
+The outstanding Level 1 issues recorded by the demonstrator include:
+
+- pathway owner;
+- exit points and exit criteria;
+- principal stages;
+- catalogue governance authority.
+
+## Recommended way to use the demonstrator
+
+A useful workshop sequence is:
+
+```text
+1. Select a pathway family
+        ↓
+2. Review the HPDS artefact
+        ↓
+3. Examine neighbourhood orchestration
+        ↓
+4. Apply the SPR lens
+        ↓
+5. Review conformance / authoring gaps
+        ↓
+6. Define the local implementation
+        ↓
+7. Validate against evidence and discovery questions
+```
+
+The starting point should be the **model of care**, not a technology choice.
+
+For example, a team considering deterioration of a frail person at home can first establish:
+
+- what the pathway is trying to achieve;
+- who should participate;
+- what decisions need to be made;
+- what information is required;
+- what must be visible through an SPR;
+- what still requires task coordination or workflow;
+- what local systems and services actually implement those requirements.
+
+## Intended audiences
+
+The demonstrator may be useful to:
 
 - clinical pathway owners;
-- clinical informatics teams;
+- neighbourhood-care leaders;
+- clinical informaticians;
 - enterprise and solution architects;
-- EPR programme teams;
-- interoperability specialists;
-- information governance teams;
+- EPR and shared-record programmes;
+- interoperability and data specialists;
 - service designers;
-- digital assurance teams.
-
-It can be used to discuss what belongs in a stable pathway definition and what should remain specific to a local implementation.
+- information-governance teams;
+- digital and clinical-safety assurance teams;
+- standards developers.
 
 ## Running locally
 
-The demonstrator is a single self-contained HTML5 file.
+The application is a single self-contained HTML5 file.
 
 No package installation, build process, web server or external JavaScript library is required.
 
-Open:
+Rename the supplied file to:
 
 ```text
 index.html
 ```
 
-in a modern web browser.
+if necessary, then open it in a modern browser.
 
-The application works offline. Links to external evidence sources obviously require internet access.
+The application itself works offline. Links to public evidence sources require internet access.
 
-## GitHub Pages
+## Publishing with GitHub Pages
 
-If the file is stored as `index.html` at the root of the repository, it can be published directly using GitHub Pages.
-
-Typical setup:
+If `index.html` is stored at the repository root:
 
 1. Open the repository **Settings**.
 2. Select **Pages**.
 3. Choose **Deploy from a branch**.
-4. Select the branch containing `index.html`, usually `main`.
-5. Select the repository root as the publishing folder.
+4. Select the publishing branch, normally `main`.
+5. Select the repository root.
 6. Save.
 
-GitHub will then provide the public Pages URL.
+GitHub Pages will publish the demonstrator as a static site.
 
 ## Technical design
 
-The demonstrator is deliberately lightweight:
+The demonstrator deliberately has no external runtime dependency.
+
+It uses:
 
 - semantic HTML5;
 - embedded CSS;
 - vanilla JavaScript;
+- inline SVG;
 - embedded JSON application data;
-- no framework;
-- no CDN;
-- no external runtime dependency;
-- responsive desktop/mobile layout;
-- light and dark themes;
+- responsive layout;
+- accessible controls;
+- light/dark theme;
 - print styling;
-- JSON projection export for individual pathways.
+- context-sensitive help;
+- client-side filtering and navigation;
+- draft JSON export.
 
-Because the source data is embedded in the HTML, the demonstrator can be distributed as a single file.
+The complete catalogue and source register are embedded in the HTML so the demonstrator can be distributed as a single file.
 
 ## Limitations
 
-This is a demonstrator, not a production pathway-management application.
+This is a standards demonstrator, not a production pathway-management or workflow application.
 
 Important limitations include:
 
-- HPDS WD 0.3 is still a Working Draft;
-- source catalogue rows are not automatically HPDS-conformant pathway definitions;
-- generated pathway-flow sketches are informative and are not Level 2 behavioural models;
-- candidate mappings require clinical and governance validation;
-- local organisational workflow may differ from the source catalogue;
-- named systems and interfaces reflect implementation evidence, not enduring pathway semantics;
+- HPDS WD 0.3 remains a Working Draft;
+- the catalogue is a reference model for local validation;
+- no current HPDS conformance is claimed;
+- pathway relationships require clinical validation;
+- generated orchestration diagrams are schematic;
+- Level 2 structural and behavioural graphs have not been fully authored;
+- Level 3 semantic bindings have not been completed;
+- Level 4 computable criteria are not implemented;
+- local implementation data are largely unvalidated;
+- the demonstrator does not make clinical decisions;
 - the demonstrator does not execute clinical workflow;
-- it does not make clinical decisions;
-- it does not replace clinical governance, safety assurance or formal standards conformance testing.
+- source evidence does not confer local clinical authority.
 
-## Relationship to implementation technologies
+## Relationship to other standards and technologies
 
-HPDS is not intended to replace technologies or standards such as:
+HPDS is not intended to replace implementation or exchange standards.
+
+A pathway described in HPDS may subsequently be realised or projected using technologies such as:
 
 - HL7 FHIR;
 - BPMN;
 - CMMN;
 - DMN;
-- workflow/orchestration platforms;
+- workflow or orchestration platforms;
 - EPR systems;
-- PAS;
 - shared care records;
-- terminology services.
+- terminology services;
+- local integration services.
 
-Instead, HPDS is intended to describe the **pathway as an enterprise and clinical business artefact**, which can then be mapped to appropriate technical realisations.
+HPDS addresses a different problem: maintaining the **pathway itself** as a reusable, governed, technology-neutral clinical and business artefact.
 
 ## Repository status
 
 This repository should currently be treated as an **experimental reference implementation and discussion resource**.
 
-Feedback is particularly useful on:
+Feedback is especially useful on:
 
-- whether the pathway / implementation boundary is clear;
-- whether the HPDS minimum dataset is sufficient for catalogue use;
-- whether the four conformance levels are useful;
-- whether pathway relationships and specialisation are expressive enough;
-- whether the standard adds value beyond existing spreadsheet catalogues;
-- whether the model supports cross-organisational care as well as acute-provider pathways;
-- where the proposed model overlaps unnecessarily with existing healthcare or process standards.
-
-## Licence and reuse
-
-No licence is asserted by this README.
-
-Before redistributing or reusing source catalogue material, evidence extracts or organisational content, check the applicable rights and licences for those sources.
-
-The HPDS specification itself should carry its own explicit licensing and publication terms before wider reuse is encouraged.
+- whether the pathway/implementation boundary is clear;
+- whether operability is a useful organising concept;
+- whether the minimum dataset is sufficient for catalogue use;
+- whether the four conformance levels are coherent;
+- whether care coordination requires an explicit first-class HPDS relationship;
+- whether digital/care-coordination capabilities should remain derived or become part of the model;
+- whether the relationship model is sufficient for neighbourhood pathways;
+- whether reference pathways can be specialised locally without fragmentation;
+- whether the model complements rather than duplicates existing clinical, process and interoperability standards.
 
 ## Files
 
+A minimal repository can contain:
+
 ```text
-index.html     Interactive HPDS WD 0.3 Acute Admissions & Discharge demonstrator
-README.md      This file
+index.html    Frailty & Multimorbidity Neighbourhood Care HPDS demonstrator
+README.md     This file
 ```
+
+The working spreadsheet catalogue and HPDS WD 0.3 specification may be maintained separately or added to the repository where publication rights and version control permit.
 
 ## About HPDS
 
-**Healthcare Pathway Description Standard (HPDS)** is an experimental standards proposal for representing healthcare pathways as governed, technology-neutral business artefacts suitable for cataloguing, comparison, specialisation, provenance, semantic binding and implementation mapping.
+The **Healthcare Pathway Description Standard (HPDS)** is an experimental standards proposal for representing healthcare pathways as governed, technology-neutral business artefacts suitable for:
 
-The current demonstrator uses **HPDS WD 0.3**.
+- cataloguing and discovery;
+- versioning and lifecycle management;
+- clinical and business description;
+- provenance and evidence;
+- semantic binding;
+- pathway relationships and specialisation;
+- local implementation mapping;
+- conformance assessment.
+
+This demonstrator uses **HPDS WD 0.3** and the **Frailty and Multimorbidity Neighbourhood Care Pathway Catalogue 0.1.0**.
